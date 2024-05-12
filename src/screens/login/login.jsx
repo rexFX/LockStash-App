@@ -147,11 +147,13 @@ const Login = ({navigation}) => {
         style={styles.input}
         placeholder="Server"
         value={SERVER}
+        placeholderTextColor="#000"
         onChangeText={setSERVER}
       />
       <TextInput
         style={styles.input}
         placeholder="Email"
+        placeholderTextColor="#000"
         value={email}
         onChangeText={setEmail}
       />
@@ -159,6 +161,7 @@ const Login = ({navigation}) => {
         style={styles.input}
         placeholder="Password"
         secureTextEntry
+        placeholderTextColor="#000"
         value={password}
         onChangeText={setPassword}
       />

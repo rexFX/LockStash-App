@@ -57,6 +57,7 @@ const UnlockMediaFiles = ({navigation}) => {
           style={styles.input}
           placeholder="Server"
           value={SERVER}
+          placeholderTextColor="#000"
           onChangeText={setSERVER}
         />
       }
@@ -65,6 +66,7 @@ const UnlockMediaFiles = ({navigation}) => {
         placeholder="Enter your media password"
         secureTextEntry
         value={Password}
+        placeholderTextColor="#000"
         onChangeText={setPassword}
       />
       <Button title="Unlock" onPress={decryptEncryptedKey} />

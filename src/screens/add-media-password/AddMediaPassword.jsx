@@ -90,12 +90,14 @@ const AddMediaPassword = ({navigation}) => {
         placeholder="Media Password"
         secureTextEntry
         value={Password}
+        placeholderTextColor="#000"
         onChangeText={setPassword}
       />
       <TextInput
         style={styles.input}
         placeholder="Confirm Media Password"
         secureTextEntry
+        placeholderTextColor="#000"
         value={confirm_password}
         onChangeText={setConfirmPassword}
       />
