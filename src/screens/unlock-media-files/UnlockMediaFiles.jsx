@@ -86,6 +86,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
+    color: 'black',
     marginBottom: 20,
   },
   input: {
@@ -94,6 +95,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     borderWidth: 1,
     borderColor: '#333',
+    color: 'black',
     borderRadius: 5,
   },
   error: {

@@ -77,6 +77,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   noFilesText: {
+    color: 'black',
     fontSize: 20,
   },
   fileListViewer: {
@@ -91,5 +92,6 @@ const styles = StyleSheet.create({
   info: {
     padding: 10,
     textAlign: 'center',
+    color: 'black',
   },
 });

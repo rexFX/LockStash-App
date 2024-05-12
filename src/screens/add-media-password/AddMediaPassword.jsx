@@ -119,6 +119,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     marginBottom: 20,
+    color: 'black',
   },
   input: {
     borderWidth: 1,
@@ -126,6 +127,7 @@ const styles = StyleSheet.create({
     width: '80%',
     padding: 10,
     marginBottom: 20,
+    color: 'black',
   },
   error: {
     color: 'red',
