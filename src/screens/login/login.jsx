@@ -60,7 +60,7 @@ const Login = ({navigation}) => {
       await new Promise(resolve => setTimeout(resolve, 0));
       const privateKey = CryptoJS.PBKDF2(salt + password + email + salt, salt, {
         keySize: 256 / 32,
-        iterations: 10, // Can keep more iterations but it will take more time
+        iterations: 50, // Can keep more iterations but it will take more time
       }).toString();
 
       setSuccessMessage('Deriving session..');
@@ -109,6 +109,7 @@ const Login = ({navigation}) => {
       }
     } catch (err) {
       console.log("Email or Password is not correct");
+      setSuccessMessage('');
       setErrorMessage("Email or Password is not correct");
       return null;
     }
@@ -116,22 +117,28 @@ const Login = ({navigation}) => {
 
   const handleSignup = async () => {
     setErrorMessage('');
-    setIsSuccessfulRegistration(false);
     if (email === '' || password === '' || SERVER === '') {
       return;
     }
 
     dispatch(set_SERVER(SERVER));
 
+    setSuccessMessage('Generating salt..');
+    await new Promise(resolve => setTimeout(resolve, 0));
+
     const salt = srp.generateSalt();
 
+    setSuccessMessage('Generating privateKey..');
+    await new Promise(resolve => setTimeout(resolve, 0));
     const privateKey = CryptoJS.PBKDF2(salt + password + email + salt, salt, {
       keySize: 256 / 32,
-      iterations: 10,
+      iterations: 50,
     }).toString();
 
     console.log(privateKey);
 
+    setSuccessMessage('Generating verifier..');
+    await new Promise(resolve => setTimeout(resolve, 0));
     const verifier = srp.deriveVerifier(privateKey);
     fetch(`http://${SERVER}/api/signup`, {
       method: 'POST',
@@ -147,6 +154,7 @@ const Login = ({navigation}) => {
       })
       .catch(err => {
         console.log(err.message)
+        setSuccessMessage('');
         setErrorMessage(err.message);
       });
   };
