@@ -12,7 +12,7 @@ import { set_SERVER } from '../../../redux/features/key-slice';
 import RNSecureStorage, {ACCESSIBLE} from 'rn-secure-storage';
 
 import * as srp from 'secure-remote-password/client';
-import CryptoJS from 'crypto-js';
+import CryptoJS from 'crypto-es';
 
 import { useDispatch } from 'react-redux';
 
@@ -21,9 +21,6 @@ const Login = ({navigation}) => {
   const [SERVER, setSERVER] = useState('')
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
-  const [is_successful_registration, setIsSuccessfulRegistration] =
-    useState(false);
 
   const [error_message, setErrorMessage] = useState('');
   const [success_message, setSuccessMessage] = useState('');
@@ -36,11 +33,14 @@ const Login = ({navigation}) => {
     dispatch(set_SERVER(SERVER));
 
     setErrorMessage('');
-    setIsSuccessfulRegistration(false);
+    setSuccessMessage('Logging in..');
+    await new Promise(resolve => setTimeout(resolve, 0));
 
     try {
       let user = null;
 
+      setSuccessMessage('Fetching user..');
+      await new Promise(resolve => setTimeout(resolve, 0));
       let resp = await fetch(`http://${SERVER}/api/login`, {
         method: 'POST',
         body: JSON.stringify({email: email}),
@@ -51,12 +51,20 @@ const Login = ({navigation}) => {
       resp = await resp.json();
 
       const {salt, serverEphemeral} = resp;
+
+      setSuccessMessage('Generating ephemerals..');
+      await new Promise(resolve => setTimeout(resolve, 0));
       const clientEphemeral = srp.generateEphemeral();
 
+      setSuccessMessage('Generating privateKey..');
+      await new Promise(resolve => setTimeout(resolve, 0));
       const privateKey = CryptoJS.PBKDF2(salt + password + email + salt, salt, {
         keySize: 256 / 32,
-        iterations: 100,
+        iterations: 10, // Can keep more iterations but it will take more time
       }).toString();
+
+      setSuccessMessage('Deriving session..');
+      await new Promise(resolve => setTimeout(resolve, 0));
 
       const clientSession = srp.deriveSession(
         clientEphemeral.secret,
@@ -82,6 +90,10 @@ const Login = ({navigation}) => {
       res = await res.json();
       const {serverProof, key, files, mediaPassword} = res;
       console.log("res:", res);
+
+      setSuccessMessage('Verifying session..');
+      await new Promise(resolve => setTimeout(resolve, 0));
+
       srp.verifySession(clientEphemeral.public, clientSession, serverProof);
       user = {"email": email, "key": key, "files": files, "mediaPassword": mediaPassword};
 
@@ -115,7 +127,7 @@ const Login = ({navigation}) => {
 
     const privateKey = CryptoJS.PBKDF2(salt + password + email + salt, salt, {
       keySize: 256 / 32,
-      iterations: 100,
+      iterations: 10,
     }).toString();
 
     console.log(privateKey);
@@ -130,7 +142,6 @@ const Login = ({navigation}) => {
     })
       .then(resp => resp.json())
       .then(resp => {
-        setIsSuccessfulRegistration(true);
         setSuccessMessage(resp.message);
         console.log(resp.message);
       })
@@ -165,7 +176,7 @@ const Login = ({navigation}) => {
         value={password}
         onChangeText={setPassword}
       />
-      {is_successful_registration && (
+      {success_message.length > 0 && (
         <Text style={styles.registrationSuccessText}>{success_message}</Text>
       )}
 

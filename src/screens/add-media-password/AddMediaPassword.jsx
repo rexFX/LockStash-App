@@ -1,6 +1,6 @@
 import React from 'react';
 import {SafeAreaView, Text, TextInput, Button, StyleSheet} from 'react-native';
-import CryptoJS from 'crypto-js';
+import CryptoJS from 'crypto-es';
 import RNSecureStorage from 'rn-secure-storage';
 import * as srp from 'secure-remote-password/client';
 import { CommonActions } from '@react-navigation/native';
@@ -29,8 +29,8 @@ const AddMediaPassword = ({navigation}) => {
 
           const email = user_data.email;
           const dec_key = CryptoJS.PBKDF2(srp.generateSalt(), srp.generateSalt(), {
-            keySize: 1024 / 32,
-            iterations: 1000,
+            keySize: 256 / 32,
+            iterations: 100,
           }).toString();
           console.log("dec", dec_key);
           const encryptedKey = CryptoJS.AES.encrypt(dec_key, Password).toString();
