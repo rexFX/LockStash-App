@@ -232,7 +232,7 @@ const Home = ({navigation}) => {
                     <TouchableOpacity style={styles.fileNameTouchableOpacity} key={index} onLongPress={() => {
                       handleDownload(file.fileName, dec_file)
                     }}>
-                      <Text>{dec_file}</Text>
+                      <Text style={styles.fileName}>{dec_file}</Text>
                     </TouchableOpacity>
                   )
                 })
@@ -318,6 +318,10 @@ const styles = StyleSheet.create({
   error: {
     color: 'red',
     marginTop: 10,
+  },
+  fileName: {
+    fontSize: 20,
+    color: 'black',
   },
 });
 

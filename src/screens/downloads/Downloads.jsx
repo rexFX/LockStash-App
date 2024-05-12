@@ -41,7 +41,7 @@ const Downloads = ({navigation}) => {
                     <TouchableOpacity style={styles.fileNameTouchableOpacity} key={index} onPress={() => {
                       ViewFile(file)
                     }}>
-                      <Text>{file.name}</Text>
+                      <Text style={styles.fileName}>{file.name}</Text>
                     </TouchableOpacity>
                   )
                 })
@@ -93,5 +93,9 @@ const styles = StyleSheet.create({
     padding: 10,
     textAlign: 'center',
     color: 'black',
+  },
+  fileName: {
+    color: 'black',
+    fontSize: 20,
   },
 });

@@ -11,6 +11,7 @@
       android:allowBackup="false"
       android:requestLegacyExternalStorage="true"
       android:largeHeap="true"
+      android:usesCleartextTraffic="true"
       android:theme="@style/AppTheme">
       <activity
         android:name=".MainActivity"
